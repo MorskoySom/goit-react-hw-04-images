@@ -1,6 +1,5 @@
 import Modal from 'react-modal';
 import { GalleryItem, Image } from './ImageGalleryItem.styled'
-import { Component } from 'react';
 import { useState } from 'react';
 
 const customStyles = {
