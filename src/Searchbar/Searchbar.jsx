@@ -1,42 +1,38 @@
-import React, { Component } from 'react';
 import { HeaderBlock, Forma, FormButton, FormInput } from './Searchbar.styled';
+import { useState } from 'react';
 
-export class Searchbar extends Component {
-    state = {
-        inputQuery: "",
+export const Searchbar = ({ toSubmit }) => {
+    const [inputQuery, setInputQuery] = useState('');
+
+    const handleChange = (evt) => {
+        setInputQuery(evt.target.value.toLowerCase());
     }
 
-    handleChange = (evt) => {
-        this.setState({ inputQuery: evt.target.value.toLowerCase() });
-    }
-
-    handleSubmit = (evt) => {
+    const handleSubmit = (evt) => {
         evt.preventDefault();
-        const { inputQuery } = this.state;
         if (inputQuery.trim() !== "") {
-            this.props.toSubmit(inputQuery);
-            this.setState({ inputQuery: '' });
+            toSubmit(inputQuery);
+            setInputQuery('');
         }
     }
 
-    render() {
-        return (
-            <HeaderBlock>
-                <Forma onSubmit={this.handleSubmit}>
-                    <FormButton type="submit">
-                        <span>Search</span>
-                    </FormButton>
+    return (
+        <HeaderBlock>
+            <Forma onSubmit={handleSubmit}>
+                <FormButton type="submit">
+                    <span>Search</span>
+                </FormButton>
 
-                    <FormInput
-                        type="text"
-                        autoComplete="off"
-                        autoFocus
-                        placeholder="Search images and photos"
-                        value={this.state.inputQuery}
-                        onChange={this.handleChange}
-                    />
-                </Forma>
-            </HeaderBlock>
-        );
-    }
+                <FormInput
+                    type="text"
+                    autoComplete="off"
+                    autoFocus
+                    placeholder="Search images and photos"
+                    value={inputQuery}
+                    onChange={handleChange}
+                />
+            </Forma>
+        </HeaderBlock>
+    );
 }
+
