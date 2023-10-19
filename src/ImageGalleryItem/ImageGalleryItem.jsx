@@ -38,7 +38,6 @@ export const ImageGalleryItem = ({ image }) => {
             <img src={image.largeImageURL} alt={image.tags} />
         </Modal>
     </GalleryItem>)
-
 }
 
 

@@ -15,28 +15,28 @@ export const App = () => {
   const [loadMore, setLoadMore] = useState(false)
   const [error, setError] = useState(false)
 
-  const getImages = async () => {
-    try {
-      setLoading(true);
-      setError(false);
-      const pictures = await fetchImages(query, page);
-      setGalleryItems(prevGalleryItems => [...prevGalleryItems, ...pictures.hits]);
-      if (page < Math.ceil(pictures.totalHits / 12)) {
-        setLoadMore(true);
-      }
-      if (page >= Math.ceil(pictures.totalHits / 12)) {
-        setLoadMore(false);
-      }
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
     if (query && page) {
-      getImages();
+      async function getImages() {
+        try {
+          setLoading(true);
+          setError(false);
+          const pictures = await fetchImages(query, page);
+          setGalleryItems(prevGalleryItems => [...prevGalleryItems, ...pictures.hits]);
+          if (page < Math.ceil(pictures.totalHits / 12)) {
+            setLoadMore(true);
+          }
+          if (page >= Math.ceil(pictures.totalHits / 12)) {
+            setLoadMore(false);
+          }
+        } catch (error) {
+          setError(true);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      getImages()
     }
   }, [query, page]);
 
